@@ -1,0 +1,39 @@
+class Player :
+	def __init__(self, name):
+		self.name = name
+		self.position = 0
+		self.money = 1500
+
+	def movePosition(self, firstDe, secondDe):
+		add = firstDe + secondDe
+		self.position += secondDe + firstDe
+		print self.name , " avance de " , add , "\n il arrive sur la case " , self.position
+
+	def moveMoney(self, money):
+		self.money += money
+		print self.name , " a " , money 
+
+
+
+class Building :
+	def __init__(self, position, name, price, homePrice, BuildPrice):
+		self.position 	= position
+		self.name 		= name
+		self.price 		= price
+		self.homePrice 	= homePrice
+		self.BuildPrice = BuildPrice
+
+
+class RailRoad :
+	def __init__(self, position, name):
+		self.position 	= position
+		self.name 		= name
+		self.price 		= 200
+
+
+
+
+
+j1 = Player("dede")
+j1.move(4,2)
+j1.move(4,5)
