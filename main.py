@@ -19,21 +19,17 @@ class Player :
 
 	def movePosition(self, add):
 		self.position = (self.position + add) % 40
-		print self.name , " avance de " , add , "\n il arrive sur la case " , self.position
+		print "\n", self.name , " avance de " , add , "jusqu'a la case " , self.position
 
 	def moveMoney(self, money):
 		self.money += money
-		if  money > 0 :
-			print self.name , " gagne " , money
-		else :
-			print self.name , " perd " , money
 
 
 
 #Impression d'une case
 def printCase(pos) :
-        print "\n------------------------------------------- \n"
-        print "\nVous etes pos " , pos , "\n" #rajouter les autres joueurs
+        print "\n-------------------------------------------"
+        print "Vous etes pos " , pos #rajouter les autres joueurs
         if Cases[pos]["type"] == 0 :
                 print "\n" , Cases[pos]["name"]
                 if Cases[pos]["moveMoney"] <100 :
@@ -45,20 +41,20 @@ def printCase(pos) :
                 print "\n" + Cases[pos]["name"]
                 haveProp(pos)
                 print "\nPrix : " , Cases[pos]["price"]
-                print "\nTaxe : " , Cases[pos]["TaxPrice"][0] , " pour 1 maison"
-                print "\n       " , Cases[pos]["TaxPrice"][1] , " pour 2 maisons"
-                print "\n       " , Cases[pos]["TaxPrice"][2] , " pour 3 maisons"
-                print "\n       " , Cases[pos]["TaxPrice"][3] , " pour 4 maisons"
-                print "\n\nPrix d'une maison : " , Cases[pos]["homesPrice"]
+                print "\nTaxe :  " , Cases[pos]["TaxPrice"][0] , " pour 1 maison"
+                print "        " , Cases[pos]["TaxPrice"][1] , " pour 2 maisons"
+                print "        " , Cases[pos]["TaxPrice"][2] , " pour 3 maisons"
+                print "        " , Cases[pos]["TaxPrice"][3] , "pour 4 maisons"
+                print "\nPrix d'une maison : " , Cases[pos]["homesPrice"]
 
         if Cases[pos]["type"] == 2 :
                 print "\nBienvenue a " , Cases[pos]["name"]
                 haveProp(pos)
                 print "\nPrix : " , Cases[pos]["price"]
                 print "\nTaxe :  25  pour 1"
-                print "\n        50  pour 2"
-                print "\n        100 pour 3"
-                print "\n        200 pour 4"
+                print "        50  pour 2"
+                print "        100 pour 3"
+                print "        200 pour 4"
                 
         if Cases[pos]["type"] == 3 :
                 print "\nBienvenue en dégrisement..."
@@ -68,7 +64,7 @@ def printCase(pos) :
                 haveProp(pos)
                 print "\nPrix : " , Cases[pos]["price"]
                 print "\nTaxe :  x4 pour une compagnie"
-                print "\n        x10 pour les 2"
+                print "        x10 pour les 2"
                 
         if Cases[pos]["type"] == 5 :
                 print "\nBienvenue au " , Cases[pos]["name"]
@@ -78,7 +74,6 @@ def printCase(pos) :
                 
         if Cases[pos]["type"] == 7 :
                 print "\nCARTE CHANCE"
-        print "\n-------------------------------------------"
 
 
 def haveProp(pos) :
@@ -142,7 +137,6 @@ def initGame():
         for i in range(nbPlayers) :
                 name = input("Entrez nom : ")
                 tabPlayers.append(Player(name))
-                tabPlayers[i].moveMoney(1500)
                 Cases[0]["players"].append(i)
         return nbPlayers
                 
@@ -161,12 +155,13 @@ def win():
 
 def throwDice():
         dice = random.randrange(1, 7, 1)
-        print "\nDé : " , dice
+        print "Dé : " , dice
         return dice
 
 def buyCase(player):
         pos = tabPlayers[player].position
-        if haveProp(pos) != -1 :
+        prop = Cases[pos]["proprietaire"]
+        if prop != -1 :
                 print "\nImpossible : appartient deja a " , tabPlayers[player].name
         elif tabPlayers[player].money < Cases[pos]["price"] :
                 print "\nImpossible : Vous n'avez que ", tabPlayers[player].money
@@ -177,6 +172,7 @@ def buyCase(player):
 
 
 def move(player):
+        raw_input("Appuyez sur entree pour lancer les dés")
         pos = tabPlayers[player].position
         fDice = throwDice()
         sDice = throwDice()
@@ -192,7 +188,7 @@ def move(player):
 
 def printState():
         for i in range(nbPlayers):
-                print "Joueur " , tabPlayers[i].name , " est case ", tabPlayers[i].position , " et a ", tabPlayers[i].money
+                print "Joueur " , tabPlayers[i].name , " est case ", tabPlayers[i].position , " et a ", tabPlayers[i].money, " euros"
 
 def homesTax(player):
         pos = tabPlayers[player].position
@@ -202,7 +198,7 @@ def homesTax(player):
                 tax = Cases[pos]["TaxPrice"][homes]
                 tabPlayers[player].moveMoney( -tax )
                 tabPlayers[prop].moveMoney( tax )
-                print tabPlayers[player].name, " paye une taxe de ", tax, " a ", tabPlayers[prop].name
+                print "\n", tabPlayers[player].name, " paye une taxe de ", tax, " a ", tabPlayers[prop].name
 
 def gareTax(player):
         pos = tabPlayers[player].position
@@ -217,12 +213,16 @@ def gareTax(player):
         if Cases[35]["proprietaire"] == prop :
                 cpt += 1
         if cpt == 1 :
+                print "\n", tabPlayers[player].name, " paye une taxe de ", 25, " a ", tabPlayers[prop].name 
                 return 25
         elif cpt == 2 :
+                print "\n", tabPlayers[player].name, " paye une taxe de ", 50, " a ", tabPlayers[prop].name
                 return 50
         elif cpt == 3 :
+                print "\n", tabPlayers[player].name, " paye une taxe de ", 100, " a ", tabPlayers[prop].name
                 return 100
         elif cpt == 4 :
+                print "\n", tabPlayers[player].name, " paye une taxe de ", 200, " a ", tabPlayers[prop].name
                 return 200
         else :
                 return 0
@@ -282,8 +282,8 @@ def onAPropertie(player):
 def onAGare(player):
         pos = tabPlayers[player].position
         prop = Cases[pos]["proprietaire"]    
-        if haveProp(pos) == player :
-                print " Bienvenue chez vous"
+        if prop == player :
+                print "Bienvenue chez vous"
         elif prop > -1 :
                 tax = gareTax(player)
                 tabPlayers[player].moveMoney( -tax )
@@ -298,8 +298,8 @@ def onAGare(player):
 def onDistrib(player, score):
         pos = tabPlayers[player].position
         prop = Cases[pos]["proprietaire"]    
-        if haveProp(pos) == player :
-                print " Bienvenue chez vous"
+        if prop == player :
+                print "Bienvenue chez vous"
         elif prop > -1 :
                 tax = distribTax(player) * score
                 tabPlayers[player].moveMoney( -tax )
@@ -312,10 +312,12 @@ def onDistrib(player, score):
                         buyCase(player)
                 
 def turn(player):
+        print "\n-------------------------------------------"
+        printState()
+        print "\nTour Joueur ", (player+1), " : ", tabPlayers[player].name
         score = move(player)
         pos = tabPlayers[player].position
         printCase(pos)
-        printState()
 
         if Cases[pos]["type"] == 0 :
                 money = Cases[pos]["moveMoney"]
@@ -331,14 +333,15 @@ def turn(player):
                 print "Gerer la prison"
 
         if Cases[pos]["type"] == 4 :
-                print "repos"
+                onDistrib(player,score)
                 
         if Cases[pos]["type"] == 6 :
                 print "Gerer carte communautaire"
                 
         if Cases[pos]["type"] == 7 :
                 print "Gerer carte chance"
-        
+
+        raw_input("\nAppuyez sur entree continuer...")
         
                         
 
