@@ -26,64 +26,6 @@ class Player :
 
 
 
-#Impression d'une case
-def printCase(pos) :
-        print "\n-------------------------------------------"
-        print "Vous etes pos " , pos #rajouter les autres joueurs
-        if Cases[pos]["type"] == 0 :
-                print "\n" , Cases[pos]["name"]
-                if Cases[pos]["moveMoney"] <100 :
-                        print "\n Vous perdez " , Cases[pos]["moveMoney"]
-                else :
-                        print "\n Vous gagnez " , Cases[pos]["moveMoney"]
-
-        if Cases[pos]["type"] == 1 :
-                print "\n" + Cases[pos]["name"]
-                haveProp(pos)
-                print "\nPrix : " , Cases[pos]["price"]
-                print "\nTaxe :  " , Cases[pos]["TaxPrice"][0] , " pour 1 maison"
-                print "        " , Cases[pos]["TaxPrice"][1] , " pour 2 maisons"
-                print "        " , Cases[pos]["TaxPrice"][2] , " pour 3 maisons"
-                print "        " , Cases[pos]["TaxPrice"][3] , "pour 4 maisons"
-                print "\nPrix d'une maison : " , Cases[pos]["homesPrice"]
-
-        if Cases[pos]["type"] == 2 :
-                print "\nBienvenue a " , Cases[pos]["name"]
-                haveProp(pos)
-                print "\nPrix : " , Cases[pos]["price"]
-                print "\nTaxe :  25  pour 1"
-                print "        50  pour 2"
-                print "        100 pour 3"
-                print "        200 pour 4"
-                
-        if Cases[pos]["type"] == 3 :
-                print "\nBienvenue en dégrisement..."
-                
-        if Cases[pos]["type"] == 4 :
-                print "\nBienvenue a la " , Cases[pos]["name"]
-                haveProp(pos)
-                print "\nPrix : " , Cases[pos]["price"]
-                print "\nTaxe :  x4 pour une compagnie"
-                print "        x10 pour les 2"
-                
-        if Cases[pos]["type"] == 5 :
-                print "\nBienvenue au " , Cases[pos]["name"]
-                
-        if Cases[pos]["type"] == 6 :
-                print "\nCAISSE COMMUNAUTAIRE"
-                
-        if Cases[pos]["type"] == 7 :
-                print "\nCARTE CHANCE"
-
-
-def haveProp(pos) :
-        prop = Cases[pos]["proprietaire"]
-        if prop == -1 :
-                print "\nPas de proprietaire"
-        else :
-                print "\nAppartient a " , tabPlayers[prop].name
-        return prop
-
 Cases = [
 		{"pos" : 0,  "type" : 0, "players":[], "name" : "Depart", "moveMoney" : 200 },
 		{"pos" : 1,  "type" : 1, "players":[], "name" : "Dolphin", "proprietaire" : -1, "price" : 150, "homes": 0, "homesPrice": 100, "TaxPrice":[10,70,200,550,750] },
@@ -128,18 +70,87 @@ Cases = [
                 ]
 
 
-# Gares 25 50 100 200
-# Compagnie x4 x10
+#Impression d'une case
+def printCase(pos) :
+        print "\n-------------------------------------------"
+        print "Vous etes pos " , pos #rajouter les autres joueurs
+        if Cases[pos]["type"] == 0 :
+                print "\n" , Cases[pos]["name"]
+                if Cases[pos]["moveMoney"] <100 :
+                        print "\n Vous perdez " , Cases[pos]["moveMoney"]
+                else :
+                        print "\n Vous gagnez " , Cases[pos]["moveMoney"]
 
+        if Cases[pos]["type"] == 1 :
+                print "\n" + Cases[pos]["name"]
+                haveProp(pos)
+                print "\nPrix : " , Cases[pos]["price"]
+                print "\nTaxe :  " , Cases[pos]["TaxPrice"][0] , " pour 1 maison"
+                print "        " , Cases[pos]["TaxPrice"][1] , " pour 2 maisons"
+                print "        " , Cases[pos]["TaxPrice"][2] , " pour 3 maisons"
+                print "        " , Cases[pos]["TaxPrice"][3] , "pour 4 maisons"
+                print "\nPrix d'une maison : " , Cases[pos]["homesPrice"]
+
+        if Cases[pos]["type"] == 2 :
+                print "\nBienvenue a " , Cases[pos]["name"]
+                haveProp(pos)
+                print "\nPrix : " , Cases[pos]["price"]
+                print "\nTaxe :  25  pour 1"
+                print "        50  pour 2"
+                print "        100 pour 3"
+                print "        200 pour 4"
+                
+        if Cases[pos]["type"] == 3 :
+                print "\nBienvenue en dégrisement..."
+                
+        if Cases[pos]["type"] == 4 :
+                print "\nBienvenue a la " , Cases[pos]["name"]
+                haveProp(pos)
+                print "\nPrix : " , Cases[pos]["price"]
+                print "\nTaxe :  x4 pour une compagnie"
+                print "        x10 pour les 2"
+                
+        if Cases[pos]["type"] == 5 :
+                print "\nBienvenue au " , Cases[pos]["name"]
+                
+        if Cases[pos]["type"] == 6 :
+                print "\nCAISSE COMMUNAUTE"
+                
+        if Cases[pos]["type"] == 7 :
+                print "\nCARTE CHANCE"
+
+# renvoi le proprietaire -1 sinon
+def haveProp(pos) :
+        prop = Cases[pos]["proprietaire"]
+        if prop == -1 :
+                print "\nPas de proprietaire"
+        else :
+                print "\nAppartient a " , tabPlayers[prop].name
+        return prop
+
+def inputNumber(message):
+        while True:
+                try:
+                        userInput = int(input(message))       
+                except ValueError:
+                        print("Veuillez saisir un entier")
+                        continue
+                else:
+                        return userInput 
+                        break
+                
+#initialise le tableau de joueurs
 def initGame():
         i=0
-        nbPlayers = int(input("Entrez le nombre de joueurs : "))
+        nbPlayers = inputNumber("Entrez le nombre de joueurs : ")
         for i in range(nbPlayers) :
-                name = input("Entrez nom : ")
+                name = raw_input("Entrez nom : ")
                 tabPlayers.append(Player(name))
                 Cases[0]["players"].append(i)
         return nbPlayers
-                
+
+
+
 def win():
         cpt = 0
         winner = -1
@@ -148,10 +159,10 @@ def win():
                         cpt = cpt + 1
                         winner = i
         if cpt > 1 :
-                return True
+                return False
         else :
                 print "Victoire de " , tabPlayers[winner].name
-                return False
+                return True
 
 def throwDice():
         dice = random.randrange(1, 7, 1)
@@ -236,8 +247,10 @@ def distribTax(player):
         if Cases[28]["proprietaire"] == prop :
                 cpt += 1
         if cpt == 1 :
+                print "\n", tabPlayers[player].name, " paye une taxe de 4x son score a ", tabPlayers[prop].name
                 return 4
         elif cpt == 2 :
+                print "\n", tabPlayers[player].name, " paye une taxe de 10x son score a ", tabPlayers[prop].name
                 return 10
         else :
                 return 0
@@ -272,7 +285,7 @@ def onAPropertie(player):
         elif prop > -1 :
                 homesTax(player)
         else :
-                print " 1 Pour acheter"
+                print "\n 1 Pour acheter"
                 print " 2 Pour passer"
                 choice = int(input("Votre choix : "))
                 if choice == 1 :
@@ -289,7 +302,7 @@ def onAGare(player):
                 tabPlayers[player].moveMoney( -tax )
                 tabPlayers[prop].moveMoney( tax )
         else :
-                print " 1 Pour acheter"
+                print "\n 1 Pour acheter"
                 print " 2 Pour passer"
                 choice = int(input("Votre choix : "))
                 if choice == 1 :
@@ -310,15 +323,136 @@ def onDistrib(player, score):
                 choice = int(input("Votre choix : "))
                 if choice == 1 :
                         buyCase(player)
+
+def onJail():
+        fDice = throwDice()
+        sDice = throwDice()
+        if fDice == sDice :
+                print "Felicitation vous avez décuvé"
+                return 1
+        else :
+                print "Encore saoul, essayez au prochain tour..."
+                return 0
+
+
+def communityCards(player):
+        pos = tabPlayers[player].position
+        card = random.randrange(1, 11, 1)
+        if card == 1 :
+                print "Allez en degrisement..."
+                Cases[pos]["players"].remove(player)
+                Cases[30]["players"].append(player)
+                tabPlayers[player].position = 30
+        elif card == 2 :
+                print "Allez case départ"
+                Cases[pos]["players"].remove(player)
+                Cases[0]["players"].append(player)
+                tabPlayers[player].position = 0
+        elif card == 3 :
+                print "Allez au Bulldog sans passer par la case départ"
+                Cases[pos]["players"].remove(player)
+                Cases[3]["players"].append(player)
+                tabPlayers[player].position = 3
+        elif card == 4 :
+                print "Amende pour ivresse sur la voie publique..."
+                tabPlayers[player].moveMoney(-400)
+                print "-400 euros"
+        elif card == 5 :
+                print "Vous remportez le tournoi de Bière Pong !"
+                tabPlayers[player].moveMoney(500)
+                print "+500 euros"
+        elif card == 6 :
+                print "RDV au teknival !"
+                Cases[pos]["players"].remove(player)
+                Cases[10]["players"].append(player)
+                tabPlayers[player].position = 10
+        elif card == 7 :
+                print "Vous titubez, reculez de 3 cases !"
+                Cases[pos]["players"].remove(player)
+                Cases[pos-3]["players"].append(player)
+                tabPlayers[player].position = pos-3
+        elif card == 8 :
+                print "Amende pour tapage nocturne..."
+                tabPlayers[player].moveMoney(-300)
+                print "-300 euros"
+        elif card == 9 :
+                print "La banque vous verse 200 euros"
+                tabPlayers[player].moveMoney(200)
+                print "+200 euros"
+        elif card == 10 :
+                print "RDV a TomorrowLand ! <3"
+                Cases[pos]["players"].remove(player)
+                Cases[37]["players"].append(player)
+                tabPlayers[player].position = 37
+
                 
+def chanceCards(player):
+        pos = tabPlayers[player].position
+        card = random.randrange(1, 11, 1)
+        if card == 1 :
+                print "Go en degrisement"
+                Cases[pos]["players"].remove(player)
+                Cases[30]["players"].append(player)
+                tabPlayers[player].position = 30
+        elif card == 2 :
+                print "Vous remboursez vos dettes aux autres joueurs"
+                tot = 0
+                for i in range(nbPlayers) :
+                        if i != player :
+                                dette = random.randrange(30, 250, 10)
+                                tot = tot + dette
+                                tabPlayers[i].moveMoney(dette)
+                                print dette, " euros a ", tabPlayers[i].name
+                tabPlayers[player].moveMoney(-tot)
+        elif card == 3 :
+                print "Erreur de la banque en votre faveur !"
+                tabPlayers[player].moveMoney(400)
+                print "+400 euros"
+        elif card == 4 :
+                print "C'est votre tournee !"
+                tot = -150 * nbPlayers
+                tabPlayers[player].moveMoney(tot)
+                print "-", tot , " euros"
+        elif card == 5 :
+                print "Frais d'hospitalisation..."
+                print "-300 euros"
+                tabPlayers[player].moveMoney(300)
+        elif card == 6 :
+                print "Vous tirez une carte communauté"
+                communityCards(player)
+        elif card == 7 :
+                print "Coin VIP au Hobo avec bouteilles..."
+                print "-300 euros"
+                tabPlayers[player].moveMoney(300)
+        elif card == 8 :
+                print "Retour case départ"
+                Cases[pos]["players"].remove(player)
+                Cases[0]["players"].append(player)
+                tabPlayers[player].position = 0
+        elif card == 9 :
+                print "Vous achetez une pinte au Marvellous..."
+                print "-100 euros"
+                tabPlayers[player].moveMoney(100)
+        elif card == 10 :
+                print "Frais de doliprane et lysopaine..."
+                print "-80 euros"
+                tabPlayers[player].moveMoney(80)                      
+
+
+
+               
 def turn(player):
         print "\n-------------------------------------------"
         printState()
-        print "\nTour Joueur ", (player+1), " : ", tabPlayers[player].name
-        score = move(player)
         pos = tabPlayers[player].position
+        print "\nTour Joueur ", (player+1), " : ", tabPlayers[player].name
+        
+        if Cases[pos]["type"] == 3 :
+                onJail()
+        else :
+                score = move(player)
+                pos = tabPlayers[player].position
         printCase(pos)
-
         if Cases[pos]["type"] == 0 :
                 money = Cases[pos]["moveMoney"]
                 tabPlayers[player].moveMoney(money)
@@ -328,34 +462,25 @@ def turn(player):
 
         if Cases[pos]["type"] == 2 :
                 onAGare(player)
-                
-        if Cases[pos]["type"] == 3 :
-                print "Gerer la prison"
 
         if Cases[pos]["type"] == 4 :
                 onDistrib(player,score)
                 
         if Cases[pos]["type"] == 6 :
-                print "Gerer carte communautaire"
+                communityCards(player)
                 
         if Cases[pos]["type"] == 7 :
-                print "Gerer carte chance"
+                chanceCards(player)
 
         raw_input("\nAppuyez sur entree continuer...")
         
                         
 
 def Game():
-        while 1==1 :
+        while win()== False :
                 for i in range(nbPlayers):
                         turn(i)
 tabPlayers = []
 nbPlayers = initGame()
 Game()
-
-
-
-
-
-
 
