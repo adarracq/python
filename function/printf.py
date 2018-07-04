@@ -4,7 +4,7 @@ from function.cards import *
 from function.turn import *
 from function.moneyExchange import *
 from function.placement import *
-from function.init import haveProp
+from function.init import *
 from function.pygam import *
 
 # Affiche etat de la partie 
