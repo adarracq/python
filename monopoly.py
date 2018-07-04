@@ -2,16 +2,6 @@ import pygame
 from pygame.locals import *
 import time
 
-pygame.init()
-
-
-fenetre = pygame.display.set_mode((800, 800))
-
-
-fond = pygame.image.load("background.jpg").convert()
-fenetre.blit(fond, (0,0))
-
-
 
 def initPion() :
         x = 4 #nbPlayers-1
@@ -58,31 +48,33 @@ def movePion(pion,pos):
         pygame.display.flip()
 
 
-def turn(posA, posB, pion): 
-        for i in range(posA, posB+1):
+def turnPion(posA, posB, pion): 
+        for i in range(posA, (posB+1)):
                 time.sleep(0.5)
                 fenetre.blit(fond, (0,0)) 
                 movePion(pion, i)
+        refreshPion()
 
 
 def refreshPion():
-        fenetre.blit(fond, (0,0))
-        #for i in range(nbPlayers-1):
-                #movePion(tabPion[i],tabPlayers[i].position)
+        a=2
+        #fenetre.blit(fond, (0,0))
+        #for i in range(main.nbPlayers-1):
+         #       movePion(i,)
 
+pygame.init()
+fenetre = pygame.display.set_mode((800, 800))
+fond = pygame.image.load("background.jpg").convert()
+fenetre.blit(fond, (0,0))
 tabPion = []
 initPion()
-movePion(0,25)
-turn(0,39,1)
+turnPion(11,11,1)
+turnPion(13,20,1)
+turnPion(20,34,1)
+turnPion(30,32,1)
 pygame.display.flip()
 
 
 
-continuer = 1
 
-#Boucle infinie
-while continuer:
-	for event in pygame.event.get():   #On parcours la liste de tous les événements reçus
-		if event.type == QUIT:     #Si un de ces événements est de type QUIT
-			continuer = 0
-			
+                        
