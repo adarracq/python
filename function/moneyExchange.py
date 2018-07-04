@@ -1,6 +1,14 @@
+from const.player import Player
+from const.boardGame import Boxes
+from function.cards import *
+from function.turn import *
+from function.init import *
+from function.placement import *
+from function.printf import *
+from function.pygam import *
 
 # Achat d'une propriete
-def buyCase(player):
+def buyCase(tabPlayers,player):
         pos = tabPlayers[player].position
         prop = Boxes[pos]["proprietaire"]
         if prop != -1 :
@@ -14,7 +22,7 @@ def buyCase(player):
 
 
 # Echange d'argent lors d'une taxe sur une propriete
-def homesTax(player):
+def homesTax(tabPlayers,player):
         pos = tabPlayers[player].position
         prop = Boxes[pos]["proprietaire"]
         if prop > -1 :
@@ -26,7 +34,7 @@ def homesTax(player):
 
 
 # Echange d'argent lors d'une taxe sur une gare
-def gareTax(player):
+def gareTax(tabPlayers,player):
         pos = tabPlayers[player].position
         prop = Boxes[pos]["proprietaire"]
         cpt = 0
@@ -55,7 +63,7 @@ def gareTax(player):
 
 
 # Echange d'argent lors d'une taxe sur une compagnie de distribution
-def distribTax(player):
+def distribTax(tabPlayers,player):
         pos = tabPlayers[player].position
         prop = Boxes[pos]["proprietaire"]
         cpt = 0
@@ -73,7 +81,7 @@ def distribTax(player):
                 return 0
 
 # Action lors de la pose d'une maison
-def putHome(player):
+def putHome(tabPlayers,player):
         pos = tabPlayers[player].position
         prop = Boxes[pos]["proprietaire"]
         if prop == player :

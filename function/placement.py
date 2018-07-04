@@ -1,5 +1,14 @@
+from const.player import Player
+from const.boardGame import Boxes
+from function.cards import *
+from function.turn import *
+from function.moneyExchange import *
+from function.init import *
+from function.printf import *
+from function.pygam import *
+
 # Action lorsque un joueur arrive sur une propriete
-def onAPropertie(player):
+def onAPropertie(tabPlayers,player):
         pos = tabPlayers[player].position
         prop = Boxes[pos]["proprietaire"]
         if prop == player :
@@ -14,23 +23,23 @@ def onAPropertie(player):
                         print " 2 Pour passer"
                         choice = int(input("Votre choix : "))
         elif prop > -1 :
-                homesTax(player)
+                homesTax(tabPlayers,player)
         else :
                 print "\n 1 Pour acheter"
                 print " 2 Pour passer"
                 choice = int(input("Votre choix : "))
                 if choice == 1 :
-                        buyCase(player)
+                        buyCase(tabPlayers,player)
 
 
 # Action lorsque un joueur arrive sur une gare
-def onAGare(player):
+def onAGare(tabPlayers,player):
         pos = tabPlayers[player].position
         prop = Boxes[pos]["proprietaire"]    
         if prop == player :
                 print "Bienvenue chez vous"
         elif prop > -1 :
-                tax = gareTax(player)
+                tax = gareTax(tabPlayers,player)
                 tabPlayers[player].moveMoney( -tax )
                 tabPlayers[prop].moveMoney( tax )
         else :
@@ -38,11 +47,11 @@ def onAGare(player):
                 print " 2 Pour passer"
                 choice = int(input("Votre choix : "))
                 if choice == 1 :
-                        buyCase(player)
+                        buyCase(tabPlayers,player)
 
 
 # Action lorsque un joueur arrive sur une compagnie de distribution
-def onDistrib(player, score):
+def onDistrib(tabPlayers,player, score):
         pos = tabPlayers[player].position
         prop = Boxes[pos]["proprietaire"]    
         if prop == player :
@@ -56,7 +65,7 @@ def onDistrib(player, score):
                 print " 2 Pour passer"
                 choice = int(input("Votre choix : "))
                 if choice == 1 :
-                        buyCase(player)
+                        buyCase(tabPlayers,player)
 
 
 # Action lorsque un joueur arrive en prison

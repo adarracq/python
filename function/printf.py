@@ -1,11 +1,20 @@
+from const.player import Player
+from const.boardGame import Boxes
+from function.cards import *
+from function.turn import *
+from function.moneyExchange import *
+from function.placement import *
+from function.init import haveProp
+from function.pygam import *
+
 # Affiche etat de la partie 
-def printState():
+def printState(tabPlayers, nbPlayers):
         for i in range(nbPlayers):
                 print "Joueur " , tabPlayers[i].name , " est case ", tabPlayers[i].position , " et a ", tabPlayers[i].money, " euros"
 
 
 #Impression d'une case
-def printCase(pos) :
+def printCase(tabPlayers,pos) :
         print "\n-------------------------------------------"
         print "Vous etes pos " , pos #rajouter les autres joueurs
         if Boxes[pos]["type"] == 0 :
@@ -17,7 +26,7 @@ def printCase(pos) :
 
         if Boxes[pos]["type"] == 1 :
                 print "\n" + Boxes[pos]["name"]
-                haveProp(pos)
+                haveProp(tabPlayers,pos)
                 print "\nPrix : " , Boxes[pos]["price"]
                 print "\nTaxe :  " , Boxes[pos]["TaxPrice"][0] , " pour 1 maison"
                 print "        " , Boxes[pos]["TaxPrice"][1] , " pour 2 maisons"
@@ -27,7 +36,7 @@ def printCase(pos) :
 
         if Boxes[pos]["type"] == 2 :
                 print "\nBienvenue a " , Boxes[pos]["name"]
-                haveProp(pos)
+                haveProp(tabPlayers,pos)
                 print "\nPrix : " , Boxes[pos]["price"]
                 print "\nTaxe :  25  pour 1"
                 print "        50  pour 2"
@@ -39,7 +48,7 @@ def printCase(pos) :
                 
         if Boxes[pos]["type"] == 4 :
                 print "\nBienvenue a la " , Boxes[pos]["name"]
-                haveProp(pos)
+                haveProp(tabPlayers, pos)
                 print "\nPrix : " , Boxes[pos]["price"]
                 print "\nTaxe :  x4 pour une compagnie"
                 print "        x10 pour les 2"

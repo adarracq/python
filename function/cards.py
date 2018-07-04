@@ -1,7 +1,14 @@
-from main import tabPlayers
-from main import nbPlayers
+import random
+from const.player import Player
+from const.boardGame import Boxes
+from function.init import *
+from function.turn import *
+from function.moneyExchange import *
+from function.placement import *
+from function.printf import *
+from function.pygam import *
 
-def communityCards(player):
+def communityCards(tabPlayers, nbPlayers, player):
         pos = tabPlayers[player].position
         card = random.randrange(1, 11, 1)
         if card == 1 :
@@ -52,7 +59,7 @@ def communityCards(player):
                 tabPlayers[player].position = 37
 
                 
-def chanceCards(player):
+def chanceCards(tabPlayers, nbPlayers, player):
         pos = tabPlayers[player].position
         card = random.randrange(1, 11, 1)
         if card == 1 :
@@ -85,7 +92,7 @@ def chanceCards(player):
                 tabPlayers[player].moveMoney(-300)
         elif card == 6 :
                 print "Vous tirez une carte communaute"
-                communityCards(player)
+                communityCards(tabPlayers, nbPlayers, player)
         elif card == 7 :
                 print "Coin VIP au Hobo avec bouteilles..."
                 print "-300 euros"

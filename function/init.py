@@ -1,4 +1,14 @@
-# Retour un entier entre au clavier
+from const.player import Player
+from const.boardGame import Boxes
+from function.cards import *
+from function.turn import *
+from function.moneyExchange import *
+from function.placement import *
+from function.printf import *
+from function.pygam import *
+
+
+# Retourne un entier entre au clavier
 def inputNumber(message):
         while True:
                 try:
@@ -11,7 +21,7 @@ def inputNumber(message):
                         break
 
 # renvoi le proprietaire -1 sinon
-def haveProp(pos) :
+def haveProp(tabPlayers, pos) :
         prop = Boxes[pos]["proprietaire"]
         if prop == -1 :
                 print "\nPas de proprietaire"
@@ -21,7 +31,7 @@ def haveProp(pos) :
  
 
 # Initialise le tableau de joueurs
-def initGame():
+def initGame(tabPlayers):
         i=0
         nbPlayers = inputNumber("Entrez le nombre de joueurs : ")
         for i in range(nbPlayers) :
@@ -32,7 +42,7 @@ def initGame():
 
 
 # Renvoie Vrai si qqun gagne la partie
-def win():
+def win(tabPlayers, nbPlayers):
         cpt = 0
         winner = -1
         for i in range(nbPlayers) :
@@ -47,10 +57,10 @@ def win():
 
                 
 # Boucle partie
-def Game():
-        while win()== False :
+def Game(tabPlayers, nbPlayers):
+        while win(tabPlayers, nbPlayers)== False :
                 for i in range(nbPlayers):
                         if tabPlayers[i].money >= 0 :
-                                turn(i)
+                                turn(tabPlayers,nbPlayers,i)
                         
 
