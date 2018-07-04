@@ -32,7 +32,16 @@ def turn(player):
         if Boxes[pos]["type"] == 3 :
                 if onJail(1) == 0 :
                         if onJail(2) == 0 :
-                                onJail(3)
+                                if onJail(3) == 1 :
+                                        score = move(player)
+                                        pos = tabPlayers[player].position
+                        else :
+                                score = move(player)
+                                pos = tabPlayers[player].position
+                else :
+                        score = move(player)
+                        pos = tabPlayers[player].position
+
         else :
                 score = move(player)
                 pos = tabPlayers[player].position
