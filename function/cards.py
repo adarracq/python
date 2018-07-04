@@ -1,25 +1,23 @@
-import random
-from plateau import *
-from main import *
-
+from main import tabPlayers
+from main import nbPlayers
 
 def communityCards(player):
         pos = tabPlayers[player].position
         card = random.randrange(1, 11, 1)
         if card == 1 :
                 print "Allez en degrisement..."
-                Cases[pos]["players"].remove(player)
-                Cases[30]["players"].append(player)
+                Boxes[pos]["players"].remove(player)
+                Boxes[30]["players"].append(player)
                 tabPlayers[player].position = 30
         elif card == 2 :
                 print "Allez case depart"
-                Cases[pos]["players"].remove(player)
-                Cases[0]["players"].append(player)
+                Boxes[pos]["players"].remove(player)
+                Boxes[0]["players"].append(player)
                 tabPlayers[player].position = 0
         elif card == 3 :
                 print "Allez au Bulldog sans passer par la case depart"
-                Cases[pos]["players"].remove(player)
-                Cases[3]["players"].append(player)
+                Boxes[pos]["players"].remove(player)
+                Boxes[3]["players"].append(player)
                 tabPlayers[player].position = 3
         elif card == 4 :
                 print "Amende pour ivresse sur la voie publique..."
@@ -31,13 +29,13 @@ def communityCards(player):
                 print "+500 euros"
         elif card == 6 :
                 print "RDV au teknival !"
-                Cases[pos]["players"].remove(player)
-                Cases[10]["players"].append(player)
+                Boxes[pos]["players"].remove(player)
+                Boxes[10]["players"].append(player)
                 tabPlayers[player].position = 10
         elif card == 7 :
                 print "Vous titubez, reculez de 3 cases !"
-                Cases[pos]["players"].remove(player)
-                Cases[pos-3]["players"].append(player)
+                Boxes[pos]["players"].remove(player)
+                Boxes[pos-3]["players"].append(player)
                 tabPlayers[player].position = pos-3
         elif card == 8 :
                 print "Amende pour tapage nocturne..."
@@ -49,8 +47,8 @@ def communityCards(player):
                 print "+200 euros"
         elif card == 10 :
                 print "RDV a TomorrowLand ! <3"
-                Cases[pos]["players"].remove(player)
-                Cases[37]["players"].append(player)
+                Boxes[pos]["players"].remove(player)
+                Boxes[37]["players"].append(player)
                 tabPlayers[player].position = 37
 
                 
@@ -59,8 +57,8 @@ def chanceCards(player):
         card = random.randrange(1, 11, 1)
         if card == 1 :
                 print "Go en degrisement"
-                Cases[pos]["players"].remove(player)
-                Cases[30]["players"].append(player)
+                Boxes[pos]["players"].remove(player)
+                Boxes[30]["players"].append(player)
                 tabPlayers[player].position = 30
         elif card == 2 :
                 print "Vous remboursez vos dettes aux autres joueurs"
@@ -94,8 +92,8 @@ def chanceCards(player):
                 tabPlayers[player].moveMoney(-300)
         elif card == 8 :
                 print "Retour case depart"
-                Cases[pos]["players"].remove(player)
-                Cases[0]["players"].append(player)
+                Boxes[pos]["players"].remove(player)
+                Boxes[0]["players"].append(player)
                 tabPlayers[player].position = 0
         elif card == 9 :
                 print "Vous achetez une pinte au Marvellous..."

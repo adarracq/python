@@ -1,5 +1,5 @@
 
-Cases = [
+Boxes = [
 		{"pos" : 0,  "type" : 0, "players":[], "name" : "Depart", "moveMoney" : 200 },
 		{"pos" : 1,  "type" : 1, "players":[], "name" : "Dolphin", "proprietaire" : -1, "price" : 150, "homes": 0, "homesPrice": 100, "TaxPrice":[10,70,200,550,750] },
 		{"pos" : 2,  "type" : 6, "players":[] },
